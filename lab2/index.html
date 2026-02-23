@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отчет по Заданию №2: HTTP-протокол</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>Отчет по Заданию №2: Анализ HTTP-запросов</h1>
+
+    <div class="card">
+        <h2>1. Получение главной страницы (HTTP 1.0)</h2>
+        <p>Использование метода <code>GET</code> в протоколе <code>HTTP 1.0</code>. Сервер закрывает соединение после передачи данных.</p>
+        <img src="1_GET_HTTP_1.0.png" alt="HTTP 1.0 GET">
+    </div>
+
+    <div class="card">
+        <h2>2. Получение внутренней страницы (HTTP 1.1)</h2>
+        <p>Использование метода <code>GET</code> в протоколе <code>HTTP 1.1</code>. Обязательное использование заголовка <code>Host</code>.</p>
+        <img src="2_GET_HTTP_1.1.png" alt="HTTP 1.1 GET">
+    </div>
+
+    <div class="card">
+        <h2>3 и 4. Размер файла и тип ресурса (HEAD)</h2>
+        <p>С помощью метода <code>HEAD</code> определены параметры файла без его загрузки: размер (<code>Content-Length</code>) и MIME-тип (<code>Content-Type</code>).</p>
+        <img src="3_4_HEAD_Size_and_Type.png" alt="HEAD Request">
+    </div>
+
+    <div class="card">
+        <h2>5. Отправка комментария (POST)</h2>
+        <p>Передача данных на сервер в теле запроса. Проверка работоспособности <code>index.php</code>.</p>
+        <img src="5_POST_Comment_Success.png" alt="POST Request">
+    </div>
+
+    <div class="card">
+        <h2>6 и 7. Частичный контент и кодировка</h2>
+        <p>Использование заголовка <code>Range</code> для получения первых 100 байт (статус <code>206 Partial Content</code>) и определение кодировки <code>UTF-8</code>.</p>
+        <img src="6_7_Partial_Content_with_UTF8_Encoding.png" alt="Range and Charset">
+    </div>
+
+    <div class="footer">
+        <p>Выполнено с использованием Telnet и Git</p>
+    </div>
+
+</body>
+</html>

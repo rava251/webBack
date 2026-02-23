@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Форма регистрации (Lab 3)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="form-container">
+        <h2>Анкета</h2>
+        <form action="save.php" method="POST">
+            <div class="field">
+                <label>ФИО:</label>
+                <input type="text" name="fio" placeholder="Иванов Иван Иванович" required maxlength="150">
+            </div>
+            <div class="field">
+                <label>Телефон:</label>
+                <input type="tel" name="phone" placeholder="+7 (999) 000-00-00" required>
+            </div>
+            <div class="field">
+                <label>E-mail:</label>
+                <input type="email" name="email" required>
+            </div>
+            <div class="field">
+                <label>Дата рождения:</label>
+                <input type="date" name="birthday" required>
+            </div>
+            <div class="field">
+                <label>Пол:</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="gender" value="male" checked> Мужской</label>
+                    <label><input type="radio" name="gender" value="female"> Женский</label>
+                </div>
+            </div>
+            <div class="field">
+                <label>Любимый язык программирования:</label>
+                <select name="languages[]" multiple required size="5">
+                    <option value="Pascal">Pascal</option>
+                    <option value="C">C</option>
+                    <option value="C++">C++</option>
+                    <option value="JavaScript">JavaScript</option>
+                    <option value="PHP">PHP</option>
+                    <option value="Python">Python</option>
+                    <option value="Java">Java</option>
+                    <option value="Haskell">Haskell</option>
+                    <option value="Clojure">Clojure</option>
+                    <option value="Prolog">Prolog</option>
+                    <option value="Scala">Scala</option>
+                    <option value="Go">Go</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>Биография:</label>
+                <textarea name="biography" rows="4"></textarea>
+            </div>
+            <div class="field">
+                <label><input type="checkbox" name="contract" required> С контрактом ознакомлен(а)</label>
+            </div>
+            <button type="submit">Сохранить</button>
+        </form>
+    </div>
+</body>
+</html>

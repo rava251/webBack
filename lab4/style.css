@@ -1,0 +1,16 @@
+body { font-family: sans-serif; background: #f0f2f5; display: flex; justify-content: center; padding: 20px; }
+.form-container { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
+h2 { color: #1a73e8; text-align: center; }
+.field { margin-bottom: 15px; }
+label { display: block; margin-bottom: 5px; font-weight: bold; }
+input[type="text"], input[type="tel"], input[type="email"], input[type="date"], textarea, select {
+    width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;
+}
+.radio-group { display: flex; gap: 15px; }
+button { width: 100%; padding: 12px; background: #1a73e8; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+button:hover { background: #1557b0; }
+
+/* Класс для ошибок из Задания 4 */
+.error-field { border: 2px solid red !important; background-color: #fff0f0; }
+.error-message { color: red; font-size: 0.85em; margin-top: 4px; font-weight: normal; }
+.main-error { background: #ffdada; padding: 10px; border-radius: 4px; margin-bottom: 15px; color: red; text-align: center; }
