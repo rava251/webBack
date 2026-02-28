@@ -71,3 +71,4 @@ try {
 } catch (PDOException $e) {
     exit("Ошибка базы данных: " . $e->getMessage());
 }
+
