@@ -1,35 +1,59 @@
 <?php
+// Задание 7: Скрываем ошибки для безопасности в финале, 
+// но если хочешь видеть их сейчас, замени 0 на 1
+ini_set('display_errors', 1); 
+error_reporting(E_ALL);
+
 header('Content-Type: text/html; charset=UTF-8');
 
-// 1. Валидация данных (базовая проверка) [cite: 1-6]
-if (empty($_POST['fio']) || empty($_POST['phone']) || empty($_POST['email'])) {
-    echo "Пожалуйста, заполните обязательные поля.";
+// Проверка метода (Задание 3)
+if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+    exit('Доступ разрешен только через форму.');
+}
+
+// 1. Валидация (Задание 3)
+$errors = [];
+if (empty($_POST['fio']) || !preg_match('/^[a-zA-Zа-яА-ЯёЁ\s\-]+$/u', $_POST['fio'])) {
+    $errors[] = "Заполните ФИО (только буквы).";
+}
+if (empty($_POST['phone']) || !preg_match('/^\+?[0-9\s\-]+$/', $_POST['phone'])) {
+    $errors[] = "Неверный формат телефона.";
+}
+
+if (!empty($errors)) {
+    foreach($errors as $err) echo "<p style='color:red;'>$err</p>";
+    echo '<a href="index.html">Назад</a>';
     exit();
 }
 
-// 2. Подключение к БД 
-$user = 'admin'; // Твой созданный пользователь
-$pass = '12345'; // Твой пароль
+// 2. Подключение (Задание 3)
+// Проверь: юзер 'admin', пароль '12345' (или какой ты ставил в MySQL)
 try {
-    $db = new PDO('mysql:host=localhost;dbname=web_lab3', $user, $pass, [
-        PDO::ATTR_PERSISTENT => true,
-        PDO::ERRMODE_EXCEPTION => PDO::ERRMODE_EXCEPTION
+    $db = new PDO('mysql:host=localhost;dbname=web_lab3', 'admin', '12345', [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
     ]);
 
-    // 3. Сохранение основной анкеты [cite: 9-10]
-    $stmt = $db->prepare("INSERT INTO applications (fio, phone, email, birthday, gender, biography) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->execute([$_POST['fio'], $_POST['phone'], $_POST['email'], $_POST['birthday'], $_POST['gender'], $_POST['biography']]);
+    // 3. Сохранение анкеты (Задание 3 + 7: SQL Injection protection)
+    $stmt = $db->prepare("INSERT INTO applications (fio, email, phone, birthday, gender, biography) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->execute([
+        $_POST['fio'], $_POST['email'], $_POST['phone'], 
+        $_POST['birthday'], $_POST['gender'], $_POST['biography']
+    ]);
     
     $app_id = $db->lastInsertId();
 
-    // 4. Сохранение языков (связь 1:M) [cite: 10-12]
-    $stmt = $db->prepare("INSERT INTO languages (application_id, language_name) VALUES (?, ?)");
-    foreach ($_POST['languages'] as $lang) {
-        $stmt->execute([$app_id, $lang]);
+    // 4. Сохранение языков (Задание 3: Связь 1:M)
+    if (!empty($_POST['languages'])) {
+        $stmt = $db->prepare("INSERT INTO languages (application_id, language_name) VALUES (?, ?)");
+        foreach ($_POST['languages'] as $lang) {
+            $stmt->execute([$app_id, $lang]);
+        }
     }
 
-    echo "<h3>Данные успешно сохранены!</h3>";
-    echo "<a href='index.html'>Вернуться назад</a>";
+    echo "<h3>Успех! Данные Равана Заура оглы сохранены в базу.</h3>";
+    echo "<a href='index.html'>Вернуться</a>";
+
 } catch (PDOException $e) {
-    echo "Ошибка базы данных: " . $e->getMessage();
+    // В случае ошибки выведет текст проблемы вместо 500
+    exit("Ошибка базы данных: " . $e->getMessage());
 }
